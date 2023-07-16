@@ -1,5 +1,5 @@
-FROM ubuntu
+FROM alpine:3
 
-RUN apt-get update && apt-get install -y curl ffmpeg
+RUN apk add curl ffmpeg
 
-CMD ["curl", "-k", "-u", "$USERNAME:$PASSWORD", "--ignore-content-length", "$URL", "--output", "-", "|", "ffmpeg", "-i", "-", "-c", "copy", "-f", "rtsp", "rtsp://$SERVICE/$NAME"]
+CMD curl -k -u $USERNAME:$PASSWORD --ignore-content-length $URL --output - | ffmpeg -i - -c copy -f rtsp rtsp://$SERVICE/$NAME
